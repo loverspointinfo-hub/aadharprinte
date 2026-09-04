@@ -1,0 +1,41 @@
+/* light-theme.css - Professional Clean Light Theme */
+
+:root {
+    /* Base Colors */
+    --bg-color: #f0f2f5;
+    --card-bg: #ffffff;
+    --text-color: #1f2937;
+    --label-color: #4b5563;
+    --border-color: #e5e7eb;
+    --input-bg: #f9fafb;
+    --accent-color: #3b82f6;
+    --accent-hover: #2563eb;
+    --text-muted: #6b7280;
+    
+    /* Premium Glassmorphism */
+    --glass-bg: rgba(255, 255, 255, 0.75);
+    --glass-border: rgba(255, 255, 255, 0.5);
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.08);
+    
+    /* Branding Gradients */
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --secondary-gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    --surface-gradient: radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.05) 0%, transparent 40%),
+                        radial-gradient(circle at 90% 80%, rgba(99, 102, 241, 0.05) 0%, transparent 40%);
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.form-group input:hover,
+.form-group textarea:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    box-shadow: 0 0 20px 3px rgba(0, 122, 204, 0.3), 0 4px 15px rgba(0, 0, 0, 0.5);
+    /* background-color: #2d2d2d; */
+}

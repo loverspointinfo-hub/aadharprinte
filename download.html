@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Aadhaar | Secure Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📄</text></svg>">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="light-theme.css">
+    <link rel="stylesheet" href="dark-theme.css">
+    <link rel="stylesheet" href="download.css">
+    <script src="theme-init.js"></script>
+</head>
+<body>
+<header class="main-header no-print">
+    <div class="header-content">
+        <div class="logo">
+            <span class="logo-icon">📄</span>
+            <h1>Aadhaar Pro</h1>
+        </div>
+        <button type="button" id="mobile-menu-toggle" class="mobile-nav-toggle" aria-label="Toggle Navigation">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+        <div class="header-right">
+            <nav class="main-nav" id="main-nav">
+                <a href="index.html" class="nav-btn">
+                    <span class="icon">✨</span> Generate Aadhaar
+                </a>
+                <a href="download.html" class="nav-btn active">
+                    <span class="icon">📥</span> Download Aadhaar
+                </a>
+                <button type="button" id="btn-show-history" class="nav-btn">
+                    <span class="icon">📜</span> History
+                </button>
+            </nav>
+            <div class="header-actions">
+                <div class="theme-toggle-container">
+                    <button type="button" id="theme-toggle" class="theme-toggle-btn" title="Toggle Theme">
+                        <span class="theme-icon sun-icon">☀️</span>
+                        <span class="theme-icon moon-icon">🌙</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="download-container">
+
+        <main class="download-main">
+            <div class="glass-card" id="step-1">
+                <div class="step-indicator">Step 1 of 2</div>
+                <h2>Enter Aadhaar Details</h2>
+                <p class="subtitle">Enter your 12-digit Aadhaar number and captcha to receive an OTP.</p>
+                
+                <form id="captcha-form">
+                    <div id="captcha-error-container" class="error-container" style="display: none; margin-bottom: 20px;"></div>
+                    
+                    <div class="input-group">
+                        <label for="aadhaar-number">Aadhaar Number</label>
+                        <input type="text" id="aadhaar-number" placeholder="0000 0000 0000" maxlength="14" required autocomplete="off">
+                    </div>
+
+                    <div class="captcha-section">
+                        <div class="captcha-display">
+                            <div class="captcha-image-container" id="captcha-container">
+                                <div class="loader-small"></div>
+                            </div>
+                            <button type="button" class="refresh-btn" id="refresh-captcha" title="Refresh Captcha">
+                                <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+                            </button>
+                        </div>
+                        <div class="input-group">
+                            <label for="captcha-input">Enter Captcha</label>
+                            <input type="text" id="captcha-input" placeholder="Enter characters" required autocomplete="off">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="primary-btn" id="send-otp-btn">
+                        <span>Send OTP</span>
+                        <div class="btn-loader" style="display: none;"></div>
+                    </button>
+                </form>
+            </div>
+
+            <div class="glass-card" id="step-2" style="display: none;">
+                <div class="step-indicator">Step 2 of 2</div>
+                <h2>Verify OTP</h2>
+                <p class="subtitle">An OTP has been sent to your registered mobile number.</p>
+                
+                <form id="otp-form">
+                    <div id="otp-error-container" class="error-container" style="display: none; margin-bottom: 20px;"></div>
+                    
+                    <div class="input-group">
+                        <label for="otp-input">Enter 6-digit OTP</label>
+                        <input type="text" id="otp-input" placeholder="Enter OTP" maxlength="6" required autocomplete="one-time-code">
+                    </div>
+
+                    <div class="masking-option">
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="mask-aadhaar">
+                            <span class="checkmark"></span>
+                            Do you want a masked Aadhaar?
+                        </label>
+                    </div>
+
+                    <div class="masking-option">
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="save-to-history" checked>
+                            <span class="checkmark"></span>
+                            Save to History
+                        </label>
+                    </div>
+
+                    <button type="submit" class="primary-btn secondary" id="download-btn">
+                        <span>Verify & Download</span>
+                        <div class="btn-loader" style="display: none;"></div>
+                    </button>
+                    
+                    <button type="button" class="text-btn" id="back-to-step-1">Change Aadhaar / Captcha</button>
+                </form>
+            </div>
+
+            <div class="glass-card success-card" id="step-success" style="display: none;">
+                <div class="success-icon">
+                    <svg viewBox="0 0 24 24" width="48" height="48"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                </div>
+                <h2>Download Success!</h2>
+                <p class="subtitle">Your Aadhaar PDF has been downloaded successfully.</p>
+                <button type="button" class="primary-btn" onclick="window.location.reload()">Download Another</button>
+                <a href="index.html" class="text-btn">Back to Home</a>
+            </div>
+        </main>
+
+        <footer class="download-footer">
+            <p>&copy; 2026 UIDAI Proxy Portal. Secure & Private.</p>
+        </footer>
+    </div>
+
+    <!-- History Modal -->
+    <div id="history-modal" class="popup-overlay" style="display: none;">
+        <div class="history-popup-content">
+            <div class="history-modal-header">
+                <h3>📜 Aadhaar History</h3>
+                <button id="close-history-btn" class="close-modal-btn">&times;</button>
+            </div>
+            <div id="history-list">
+                <!-- History items will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="db.js"></script>
+    <script src="download.js"></script>
+    <script>
+        // Theme toggle logic (same as main page)
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            const isDark = document.body.classList.toggle('dark-theme');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
+        
+        // Initial state
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1334 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: 'AadhaarEnglish';
+    src: url('font/font-0020.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: block;
+}
+
+@font-face {
+    font-family: 'AadhaarHindi';
+    src: url('font/Noto-Sans-Devanagari-400.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: block;
+    -webkit-font-smoothing: antialiased;
+}
+
+@font-face {
+    font-family: 'AadhaarDigits';
+    src: url('font/font-0052.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: block;
+}
+
+body {
+    font-family: 'Poppins', 'FontDigit', 'FontHindi', 'FontEnglish', Arial, sans-serif;
+    background-color: var(--bg-color);
+    background-image: var(--surface-gradient);
+    background-attachment: fixed;
+    margin: 0;
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    min-height: 100vh;
+    overflow-x: hidden;
+    width: 100%;
+}
+
+/* Global Header Styles */
+.main-header {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    padding: 15px 40px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    font-size: 24px;
+}
+
+.logo h1 {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+}
+
+.main-nav {
+    display: flex;
+    gap: 10px;
+    background: rgba(0, 0, 0, 0.03);
+    padding: 6px;
+    border-radius: 14px;
+    border: 1px solid var(--border-color);
+}
+
+.dark-theme .main-nav {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.nav-btn {
+    padding: 10px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.nav-btn:hover {
+    color: var(--text-color);
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.dark-theme .nav-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.nav-btn.active {
+    background: var(--primary-gradient) !important;
+    color: white !important;
+    box-shadow: 0 4px 12px rgba(118, 75, 162, 0.3);
+}
+
+.app-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    /* min-height calculation to account for header */
+    min-height: calc(100vh - 80px);
+}
+
+/* Form Styles with Glassmorphism */
+.sidebar-form {
+    width: 100%;
+    max-width: 850px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: var(--glass-shadow);
+    border-radius: 24px;
+    padding: 40px;
+    z-index: 10;
+    border: 1px solid var(--glass-border);
+    animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Mobile Navigation Toggle */
+.mobile-nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1100;
+}
+
+.hamburger-line {
+    width: 100%;
+    height: 3px;
+    background-color: var(--text-color);
+    border-radius: 10px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: left center;
+}
+
+.mobile-nav-toggle.active .hamburger-line:nth-child(1) {
+    transform: rotate(45deg);
+}
+
+.mobile-nav-toggle.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+    transform: translateX(20px);
+}
+
+.mobile-nav-toggle.active .hamburger-line:nth-child(3) {
+    transform: rotate(-45deg);
+}
+
+/* Error Container Styles */
+.error-container {
+    background: rgba(239, 68, 68, 0.1);
+    border-left: 4px solid #ef4444;
+    padding: 12px 16px;
+    border-radius: 8px;
+    color: #ef4444;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+.error-container::before {
+    content: '⚠️';
+}
+
+@keyframes shake {
+    10%, 90% { transform: translate3d(-1px, 0, 0); }
+    20%, 80% { transform: translate3d(2px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+    40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+
+@media screen and (max-width: 768px) {
+    .main-header {
+        padding: 12px 20px;
+    }
+
+    .mobile-nav-toggle {
+        display: flex;
+    }
+
+    .main-nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 280px;
+        height: 100vh;
+        background: var(--glass-bg);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        flex-direction: column;
+        padding: 80px 20px 20px;
+        transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1050;
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+        display: flex;
+        gap: 15px;
+        border-radius: 0;
+        border-right: none;
+    }
+
+    .main-nav.active {
+        right: 0;
+    }
+
+    .nav-btn {
+        width: 100%;
+        padding: 14px 20px;
+        font-size: 16px;
+    }
+
+    }
+    
+    .header-content {
+        justify-content: space-between;
+    }
+
+    .header-actions {
+        order: 1; /* Moves theme toggle to the right */
+        margin-left: auto;
+        margin-right: 15px;
+    }
+
+    .mobile-nav-toggle {
+        order: 2; /* Hamburger stays on the far right */
+    }
+}
+
+@keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.sidebar-header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.sidebar-form h2 {
+    margin: 0;
+    color: var(--text-color);
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.sidebar-subtitle {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.form-group label {
+    display: block;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 14px 18px;
+    background-color: var(--input-bg);
+    border: 1.5px solid var(--border-color);
+    border-radius: 12px;
+    color: var(--text-color);
+    font-size: 16px;
+    font-family: 'Poppins', 'FontHindi', sans-serif;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-sizing: border-box;
+}
+
+/* Base input appearance for text-like inputs */
+input[type="text"], 
+input[type="date"], 
+input[type="email"], 
+input[type="number"], 
+input[type="tel"], 
+textarea {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/* Ensure Radios and Checkboxes remain functional */
+input[type="radio"],
+input[type="checkbox"] {
+    -webkit-appearance: auto;
+    -moz-appearance: auto;
+    appearance: auto;
+    width: auto;
+    height: auto;
+    cursor: pointer;
+}
+
+input[type="date"] {
+    min-height: 52px; /* Consistency on mobile */
+    position: relative;
+}
+
+/* Remove native iOS date indicator pop-ups */
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    padding: 0;
+    margin: 0;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+    outline: none;
+    transform: translateY(-1px);
+}
+
+/* Photo Preview */
+.photo-preview-container {
+    width: 70px;
+    height: 90px;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--input-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+}
+
+.photo-preview-container:hover {
+    border-color: var(--accent-color);
+    transform: scale(1.05);
+}
+
+.photo-preview-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.btn-print {
+    width: 100%;
+    padding: 18px;
+    background: var(--primary-gradient);
+    color: white;
+    border: none;
+    border-radius: 16px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 25px;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 20px -5px rgba(118, 75, 162, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-print:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px -5px rgba(118, 75, 162, 0.4);
+    filter: brightness(1.1);
+}
+
+.btn-print:active {
+    transform: translateY(0);
+}
+
+.theme-toggle-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--glass-bg);
+    color: var(--text-color);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.theme-toggle-btn:hover {
+    transform: rotate(15deg) scale(1.1);
+    background: var(--accent-color);
+    color: white;
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+}
+
+.theme-toggle-btn:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-md);
+    background: var(--border-color);
+}
+
+.dark-theme .theme-toggle-btn:hover {
+    background: var(--accent-color);
+    color: white;
+}
+
+.theme-icon {
+    position: absolute;
+    font-size: 18px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sun-icon {
+    opacity: 1;
+    transform: rotate(0deg);
+}
+
+.moon-icon {
+    opacity: 0;
+    transform: rotate(-180deg);
+}
+
+.dark-theme .sun-icon {
+    opacity: 0;
+    transform: rotate(180deg);
+}
+
+.dark-theme .moon-icon {
+    opacity: 1;
+    transform: rotate(0deg);
+}
+
+/* Preview Area Styles */
+.preview-area {
+    display: none !important;
+    /* Forces it to stay hidden override inline */
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    margin-left: 40px;
+}
+
+/* The blank background */
+.bg-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    z-index: 1;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+}
+
+/* Workspace Styles */
+.workspace {
+    position: relative;
+    width: 210mm;
+    height: 297mm;
+    background-color: white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+/* Fixed text fields base */
+.text-element {
+    position: absolute;
+    z-index: 10;
+    color: black;
+    line-height: 1;
+    letter-spacing: -0.21px;
+    white-space: normal;
+    /* Allow automatic text wrapping */
+    word-wrap: break-word;
+    /* Break long words if necessary */
+    font-family: 'AadhaarEnglish', Arial, sans-serif;
+}
+
+/* Container sections (Relative positioning contexts) */
+.inrol-section {
+    position: absolute;
+    top: 385px;
+    left: 90px;
+    width: 400px;
+    height: auto;
+    /* Let it grow with content */
+    min-height: 15px;
+    z-index: 10;
+}
+
+.inroltext {
+    position: relative;
+    /* Change from absolute to relative to stay within flow */
+    font-size: 8px;
+    line-height: 1.55;
+    margin-top: 23px;
+    /* Replaced top with margin-top */
+    margin-left: 5px;
+    /* Replaced left with margin-left */
+    color: black;
+    font-family: 'AadhaarEnglish', Arial, sans-serif;
+}
+
+.left-panel {
+    position: absolute;
+    top: 741px;
+    left: 68px;
+    width: 250px;
+    height: auto;
+    /* Let it grow */
+    min-height: 300px;
+    z-index: 10;
+}
+
+.name-section {
+    position: absolute;
+    top: 121px;
+    /* Relative to left-panel */
+    left: 80px;
+    /* Relative to left-panel */
+    width: 150px;
+    height: auto;
+    /* Let it grow */
+    min-height: 50px;
+}
+
+.qr-code,
+.signature-section {
+    position: absolute;
+    z-index: 10;
+}
+
+.qr-code-image,
+.qr-code-image-2,
+.signature,
+.signature-text {
+    position: relative;
+}
+
+.qr-code-image {
+    top: 580px;
+    left: 273px;
+    width: 105px;
+    height: auto;
+}
+
+.qr-code-image-2 {
+    top: 860px;
+    left: 530px;
+    width: 110px;
+}
+
+.signature-section {
+    margin: 2px;
+    font-size: 10px;
+    width: 80px;
+    height: 40px;
+    top: 585px;
+    left: 75px;
+}
+
+.signature {
+    font-size: 6.7px;
+    letter-spacing: -0.15px;
+}
+
+.signature-text {
+    top: 5.2px;
+    font-size: 5px;
+    line-height: 0.9;
+}
+
+.address-section {
+    position: absolute;
+    top: 852px;
+    left: 415px;
+    width: 180px;
+    height: auto;
+    /* Let it grow */
+    min-height: 110px;
+    z-index: 10;
+}
+
+/* Specific elements positioning and styling */
+/* Grouped common properties */
+.hindi-name,
+.english-name,
+.dob-text,
+.gender-text {
+    left: 3px;
+    /* Relative to name-section */
+    font-size: 8px;
+}
+
+.address-hi-label,
+.address-en-label,
+.address-en-text {
+    left: 0px;
+    /* Relative to address-section */
+}
+
+.address-hi-label,
+.address-en-label {
+    font-size: 8px;
+}
+
+.address-hi-text,
+.address-en-text {
+    font-size: 7.65px;
+    width: 100%;
+    /* Automatically adjust to the container's width */
+    max-width: 190px;
+    /* Ensures it doesn't exceed the parent width */
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+.aadhar-no-middle,
+.aadhar-no-bottom,
+.aadhar-no-top {
+    font-weight: bold;
+    font-size: 15px;
+    letter-spacing: 0px;
+    font-family: 'AadhaarDigits', Arial, sans-serif;
+}
+
+/* Individual properties */
+.enrolment-no {
+    top: 0px;
+    /* Relative to inrol-section */
+    left: 0px;
+    /* Relative to inrol-section */
+    letter-spacing: -0.px;
+    font-size: 12px;
+    font-family: 'AadhaarDigits', 'AadhaarHindi', 'AadhaarEnglish', Arial, sans-serif;
+    white-space: nowrap !important;
+}
+
+.inrol-date {
+    position: absolute;
+    transform: rotate(-90deg);
+    transform-origin: center center;
+    font-size: 6.98px;
+    left: -65px;
+    top: 159px;
+    /* Relative to inrol-section */
+    letter-spacing: 0px;
+}
+
+.download-date {
+    position: absolute;
+    transform: rotate(-90deg);
+    transform-origin: center center;
+    font-size: 6.98px;
+    left: -47px;
+    top: 50px;
+    /* Relative to inrol-section */
+    letter-spacing: 0px;
+}
+
+.hindi-name,
+.address-hi-label,
+.address-hi-text,
+.gender-text {
+    font-family: 'AadhaarHindi', 'Mangal', 'Nirmala UI', Arial, sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: geometricPrecision;
+    font-feature-settings: 'kern' 1, 'liga' 1;
+    font-variant-ligatures: common-ligatures;
+}
+
+.hindi-name {
+    top: 0px;
+    /* Relative to name-section */
+    letter-spacing: 0px;
+}
+
+.english-name {
+    top: 13px;
+    /* Relative to name-section */
+    letter-spacing: 0.2px;
+}
+
+.dob-text {
+    top: 26px;
+    /* Relative to name-section */
+    font-family: 'AadhaarDigits', 'AadhaarHindi', 'AadhaarEnglish', Arial, sans-serif;
+}
+
+.gender-text {
+    top: 40px;
+    /* Relative to name-section */
+}
+
+.aadhar-no-top {
+    position: absolute;
+    z-index: 10;
+    font-weight: 100;
+    top: 738px;
+    /* This one seems independent, but if you want it in left-panel, move it. Keeping it global for now based on HTML structure */
+    left: 140px;
+    font-size: 18px;
+    letter-spacing: -0.3px;
+    color: black;
+
+}
+
+.address-hi-label {
+    top: 3px;
+}
+
+.address-hi-text {
+    top: 10.5px;
+    /* Relative to address-section */
+    line-height: 1.06;
+    letter-spacing: 0.05px;
+}
+
+.address-en-label {
+    top: 42px;
+    /* Relative to address-section */
+}
+
+.address-en-text {
+    top: 50px;
+    /* Relative to address-section */
+    line-height: 1.09;
+    letter-spacing: 0.3px;
+}
+
+.aadhar-no-middle {
+    letter-spacing: -0.15px;
+    top: 258px;
+    /* Relative to left-panel */
+    left: 78px;
+    /* Relative to left-panel */
+
+}
+
+.aadhar-no-bottom {
+    position: absolute;
+    letter-spacing: -0.15px;
+    width: 119px;
+    top: 149px;
+    /* Relative to address-section */
+    left: 98px;
+    /* Relative to address-section */
+
+}
+
+/* Fixed Image */
+.fixed-image {
+    position: absolute;
+    z-index: 10;
+    object-fit: cover;
+    top: 120px;
+    /* Relative to left-panel */
+    left: 0px;
+    /* Relative to left-panel */
+    width: 69px;
+    height: 83px;
+}
+
+/* Reference Overlay for Alignment */
+.ref-layer {
+    display: none !important;
+}
+
+/* Premium Popup Styles */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.popup-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.popup-content {
+    background: var(--card-bg);
+    width: 90%;
+    max-width: 400px;
+    border-radius: 20px;
+    padding: 35px;
+    text-align: center;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    transform: translateY(20px) scale(0.95);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid var(--border-color);
+}
+
+.popup-overlay.active .popup-content {
+    transform: translateY(0) scale(1);
+}
+
+.popup-icon svg.spinner-animation {
+    animation: popup-spin 1.5s linear infinite;
+}
+
+@keyframes popup-spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.popup-icon {
+    width: 70px;
+    height: 70px;
+    background: var(--border-color);
+    color: var(--accent-color);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 20px;
+    box-shadow: 0 0 0 10px rgba(0, 123, 255, 0.05);
+}
+
+.popup-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 12px;
+}
+
+.popup-message {
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    color: var(--label-color);
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.popup-btn {
+    background: #ff4757;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(255, 71, 87, 0.3);
+}
+
+.popup-btn:hover {
+    background: #ff6b81;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255, 71, 87, 0.4);
+}
+
+.popup-btn:active {
+    transform: translateY(0);
+}
+
+/* .hindi-name,
+.english-name,
+.dob-text, 
+.gender-text,
+#out-inroltext,
+.address-section,
+.address-en-label,
+.address-en-text ,
+.address-hi-label,
+.address-hi-text{
+    font-size:9px
+} */
+
+@media print {
+    @page {
+        size: A4;
+        margin: 0;
+    }
+
+
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: white !important;
+        color: black !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        height: 297mm !important;
+        overflow: hidden !important;
+    }
+
+    /* Force all text elements to black in print */
+    .text-element,
+    .inroltext,
+    .signature,
+    .signature-text,
+    .inrol-date,
+    .download-date,
+    .enrolment-no,
+    .hindi-name,
+    .english-name,
+    .dob-text,
+    .gender-text,
+    .address-hi-label,
+    .address-hi-text,
+    .address-en-label,
+    .address-en-text,
+    .aadhar-no-top,
+    .aadhar-no-middle,
+    .aadhar-no-bottom {
+        color: black !important;
+    }
+
+    /* Hindi font smoothing in print */
+    .hindi-name,
+    .address-hi-label,
+    .address-hi-text,
+    .gender-text {
+        font-family: 'AadhaarHindi', 'Noto Sans Devanagari', 'Mangal', 'Nirmala UI', Arial, sans-serif !important;
+        font-weight: 400 !important;
+        font-style: normal !important;
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
+        text-rendering: geometricPrecision !important;
+        font-smooth: always !important;
+        font-feature-settings: 'kern' 1, 'liga' 1 !important;
+        font-variant-ligatures: common-ligatures !important;
+        shape-rendering: geometricPrecision !important;
+    }
+
+    .download-date {
+
+        left: -50px !important;
+
+    }
+
+    .left-panel,
+    .address-section,
+    .qr-code-image,
+    .qr-code-image-2,
+    .signature-section,
+    .inrol-section,
+    .aadhar-no-top,
+    .aadhar-no-bottom,
+    .aadhar-no-middle {
+        margin-left: -15px;
+    }
+
+
+    .app-container {
+        display: flex !important;
+        height: 297mm !important;
+        max-height: 297mm !important;
+        overflow: hidden !important;
+        justify-content: center !important;
+        align-items: flex-start !important;
+        padding: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    .sidebar-form {
+        display: none !important;
+    }
+
+    .preview-area {
+        display: flex !important;
+        margin-left: 0 !important;
+        height: 297mm !important;
+        max-height: 297mm !important;
+        overflow: hidden !important;
+    }
+
+    .workspace {
+        position: relative !important;
+        width: 210mm !important;
+        height: 297mm !important;
+        max-height: 297mm !important;
+        background-color: white !important;
+        box-shadow: none !important;
+        overflow: hidden !important;
+        transform: none !important;
+        margin: 0 !important;
+        top: auto !important;
+        left: auto !important;
+        page-break-after: avoid !important;
+        page-break-inside: avoid !important;
+    }
+
+    .popup-overlay {
+        display: none !important;
+    }
+
+    .print-button {
+        display: none;
+    }
+
+    .ref-layer {
+        display: none !important;
+    }
+}
+
+.popup-overlay.active,
+#history-modal.active {
+    display: flex !important;
+}
+
+/* History Item Styles */
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background: var(--input-bg);
+    gap: 15px;
+}
+
+.history-actions {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+@media (max-width: 500px) {
+    .history-item {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+    }
+    
+    .history-actions {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}
+
+.history-details {
+    flex: 1;
+}
+
+.history-details h4 {
+    margin: 0 0 5px 0;
+    color: var(--text-color);
+}
+
+.history-details p {
+    margin: 0;
+    font-size: 12px;
+    color: var(--label-color);
+}
+
+.history-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-history {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-preview {
+    background: var(--primary-gradient);
+    color: white;
+}
+
+.btn-print-hist {
+    background: #10b981; /* High-contrast green */
+    color: white !important;
+}
+
+.btn-delete {
+    background: #ef4444; /* High-contrast red */
+    color: white !important;
+}
+
+.btn-history:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+}
+
+/* History Modal Responsive Styles */
+.history-popup-content {
+    max-width: 600px;
+    width: min(600px, 95%);
+    max-height: 85vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: var(--glass-bg);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: var(--glass-shadow);
+    color: var(--text-color);
+    position: relative;
+    box-sizing: border-box;
+}
+
+.history-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.history-modal-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.close-modal-btn {
+    background: transparent;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: all 0.2s;
+    line-height: 1;
+    padding: 5px;
+}
+
+.close-modal-btn:hover {
+    color: var(--text-color);
+    transform: scale(1.1);
+}
+
+@media screen and (max-width: 600px) {
+    .popup-overlay {
+        padding: 0;
+        align-items: stretch;
+        justify-content: stretch;
+    }
+
+    .history-popup-content {
+        padding: 20px 12px;
+        width: 100% !important;
+        height: 100vh;
+        max-height: 100vh;
+        border-radius: 0;
+        border: none;
+        max-width: none;
+    }
+
+    .history-item {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 14px;
+        gap: 12px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .history-details {
+        width: 100%;
+        overflow-wrap: break-word;
+        word-break: break-word;
+    }
+
+    .history-details p {
+        font-size: 13px;
+    }
+
+    .history-actions {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    .btn-history {
+        padding: 12px 10px;
+        text-align: center;
+        justify-content: center;
+        font-size: 14px;
+    }
+
+    .btn-delete {
+        grid-column: span 2;
+    }
+}
+
+/* Responsive Fixes for Mobile - Robust version */
+@media screen and (max-width: 768px) {
+    .app-container {
+        padding: 15px 5px !important;
+    }
+
+    .sidebar-form {
+        padding: 15px !important;
+        border-radius: 8px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .form-row {
+        flex-direction: column !important;
+        gap: 0 !important;
+    }
+
+    .form-row .form-group {
+        width: 100% !important;
+        flex: none !important;
+        margin-bottom: 20px !important;
+    }
+
+    /* Stack name and other En/Hi pairs that use inline flex */
+    .form-group>div[style*="display:flex"],
+    .form-group>div[style*="display: flex"] {
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+
+    .form-group>div[style*="display:flex"]>input,
+    .form-group>div[style*="display: flex"]>input {
+        width: 100% !important;
+    }
+
+    /* Keep Gender radio buttons side-by-side but allows wrap if needed */
+    .form-group div[style*="gap:15px"] {
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        gap: 15px !important;
+    }
+
+    .btn-print {
+        font-size: 16px !important;
+        padding: 15px 12px !important;
+    }
+}

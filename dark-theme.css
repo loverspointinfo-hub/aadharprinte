@@ -1,0 +1,77 @@
+/* dark-theme.css - Professional VS Code Grey Theme Overrides */
+
+.dark-theme {
+    /* Base Colors Overrides */
+    --bg-color: #0f172a;
+    --card-bg: #1e293b;
+    --text-color: #f1f5f9;
+    --label-color: #94a3b8;
+    --border-color: #334155;
+    --input-bg: #1e293b;
+    --accent-color: #3b82f6;
+    --accent-hover: #60a5fa;
+    --text-muted: #94a3b8;
+
+    /* Premium Glassmorphism */
+    --glass-bg: rgba(15, 23, 42, 0.7);
+    --glass-border: rgba(30, 41, 59, 0.5);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+
+    /* Branding Gradients */
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --secondary-gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    --surface-gradient: radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 40%),
+                        radial-gradient(circle at 90% 80%, rgba(99, 102, 241, 0.1) 0%, transparent 40%);
+
+    /* Dynamic Overrides */
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Scrollbar Overrides for Dark Mode */
+.dark-theme ::-webkit-scrollbar-track {
+    background: #1e1e1e;
+}
+
+.dark-theme ::-webkit-scrollbar-thumb {
+    background: #424242;
+    border: 3px solid #1e1e1e;
+}
+
+.dark-theme ::-webkit-scrollbar-thumb:hover {
+    background: #4f4f4f;
+}
+
+.dark-theme .form-group input:hover,
+.dark-theme .form-group textarea:hover {
+    box-shadow: var(--shadow-md);
+}
+
+/* Specific UI Overrides where variables aren't enough */
+.dark-theme .form-group input:focus,
+.dark-theme .form-group textarea:focus {
+    box-shadow: 0 0 20px 3px rgba(0, 122, 204, 0.3), 0 4px 15px rgba(0, 0, 0, 0.5);
+    background-color: #2d2d2d;
+}
+
+
+
+.dark-theme .history-item {
+    background: #252526;
+}
+
+.dark-theme .history-item:hover {
+    background: #2d2d2d;
+}
+
+.dark-theme .btn-history-print {
+    background: #333333;
+}
+
+.dark-theme .btn-history-print:hover {
+    background: #007acc;
+}
+
+.dark-theme .photo-preview-container {
+    background: #252526;
+}

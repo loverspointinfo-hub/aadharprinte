@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Professional Aadhaar PDF Generation Tool - High Resolution & Secure">
+    <title>Aadhaar PDF Pro | Standalone Web App</title>
+    <!-- Add premium styles -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2d3436">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📄</text></svg>">
+    <link rel="stylesheet" href="assets/css/flatpickr.min.css">
+    <link rel="stylesheet" href="assets/css/material_green.css">
+    <link rel="stylesheet" href="style.css?v=3">
+    <link rel="stylesheet" href="light-theme.css?v=3">
+    <link rel="stylesheet" href="dark-theme.css?v=3">
+    
+    <!-- Base64 data file -->
+    <script src="base64-data.js"></script>
+     <!-- html2canvas for high-res rasterization -->
+    <script src="html2canvas.min.js?v=2"></script>
+    <!-- jsPDF for proper font-embedded PDF generation -->
+    <script src="jspdf.umd.min.js?v=2"></script>
+    <!-- PDF Generator (replaces window.print with jsPDF) -->
+    <script src="pdf-generator.js?v=2"></script>
+    <!-- Aadhaar History Database -->
+    <script src="db.js?v=2"></script>
+    <!-- All scripts bundled into one file -->
+    <script src="bundle.js?v=2"></script>
+</head>
+<body>
+
+<header class="main-header no-print">
+    <div class="header-content">
+        <div class="logo">
+            <span class="logo-icon">📄</span>
+            <h1>Aadhaar Pro</h1>
+        </div>
+        <button type="button" id="mobile-menu-toggle" class="mobile-nav-toggle" aria-label="Toggle Navigation">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+        <div class="header-right">
+            <nav class="main-nav" id="main-nav">
+                <a href="index.html" class="nav-btn active">
+                    <span class="icon">✨</span> Generate Aadhaar
+                </a>
+                <a href="download.html" class="nav-btn">
+                    <span class="icon">📥</span> Download Aadhaar
+                </a>
+                <button type="button" id="btn-show-history" class="nav-btn">
+                    <span class="icon">📜</span> History
+                </button>
+            </nav>
+            <div class="header-actions">
+                <div class="theme-toggle-container">
+                    <button type="button" id="theme-toggle" class="theme-toggle-btn" title="Toggle Theme">
+                        <span class="theme-icon sun-icon">☀️</span>
+                        <span class="theme-icon moon-icon">🌙</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="app-container">
+    <!-- UI Form Sidebar (Hidden during print) -->
+    <aside class="sidebar-form no-print">
+        <div class="sidebar-header">
+            <h2>Aadhaar Details</h2>
+            <p class="sidebar-subtitle">Fill in the information below</p>
+        </div>
+        <form id="aadhaar-form">
+            <div class="form-row" style="align-items: center; margin-bottom: 20px;">
+                <div class="form-group" style="flex: 1;">
+                    <label>Photo</label>
+                    <input type="file" id="in-photo" accept="image/*">
+                </div>
+                <div class="photo-preview-container" style="margin-left: 20px;">
+                    <img id="form-photo-preview" src="" data-base64-src="photo_base64.txt" alt="Preview">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Name (English / Hindi)</label>
+                    <div style="display:flex; gap:10px;">
+                        <input type="text" id="in-name-en" placeholder="Name" value="" style="width:50%">
+                        <input type="text" id="in-name-hi" placeholder="नाम" value="" style="width:50%">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>DOB (DD/MM/YYYY)</label>
+                    <input type="text" id="in-dob" class="date-picker" value="09/08/2007" placeholder="Select Date">
+                </div>
+                <div class="form-group">
+                    <label>Gender</label>
+                    <div style="display:flex; gap:15px; margin-top:10px; align-items: center;">
+                        <label style="display:flex; align-items:center; gap:5px; font-weight:normal; margin:0; cursor:pointer;">
+                            <input type="radio" name="in-gender" value="M" checked style="width:auto; margin:0;"> Male
+                        </label>
+                        <label style="display:flex; align-items:center; gap:5px; font-weight:normal; margin:0; cursor:pointer;">
+                            <input type="radio" name="in-gender" value="F" style="width:auto; margin:0;"> Female
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Aadhaar Number</label>
+                <input type="text" id="in-aadhaar" placeholder="Aadhaar Number" value="" maxlength="14">
+            </div>
+
+            <h3 style="font-size:14px; margin-top:15px; border-bottom:1px solid #ddd; padding-bottom:5px;">Address Details</h3>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Father Name (En / Hi)</label>
+                    <div style="display:flex; gap:10px;">
+                        <input type="text" id="in-father-en" placeholder="Father Name" value="" style="width:50%">
+                        <input type="text" id="in-father-hi" placeholder="पिता का नाम" value="" style="width:50%">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>House No. / Building (En / Hi)</label>
+                    <div style="display:flex; gap:10px;">
+                        <input type="text" id="in-house-en" placeholder="House Number" value="" style="width:50%">
+                        <input type="text" id="in-house-hi" placeholder="घर नंबर" value="" style="width:50%">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Village (En / Hi)</label>
+                    <div style="display:flex; gap:10px;">
+                        <input type="text" id="in-village-en" placeholder="Village Name" value="" style="width:50%">
+                        <input type="text" id="in-village-hi" placeholder="गांव का नाम" value="" style="width:50%">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Post (En / Hi)</label>
+                    <div style="display:flex; gap:10px;">
+                        <input type="text" id="in-post-en" placeholder="Post Name" value="" style="width:50%">
+                        <input type="text" id="in-post-hi" placeholder="पोस्ट का नाम" value="" style="width:50%">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>PIN Code</label>
+                    <input type="text" id="in-pin" placeholder="PIN Code / पिन कोड" value="" maxlength="6" inputmode="numeric">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>District (En / Hi)</label>
+                    <div style="display:flex; gap:10px;">
+                        <input type="text" id="in-district-en" placeholder="District Name" value="" style="width:50%">
+                        <input type="text" id="in-district-hi" placeholder="जिला का नाम" value="" style="width:50%">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>State (En / Hi)</label>
+                    <div style="display:flex; gap:10px;">
+                        <input type="text" id="in-state-en" placeholder="State Name" value="" style="width:50%">
+                        <input type="text" id="in-state-hi" placeholder="राज्य का नाम" value="" style="width:50%">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Issue Date</label>
+                    <input type="text" id="in-issue-date" class="date-picker" value="25/03/2016" placeholder="Select Date">
+                </div>
+                <div class="form-group">
+                    <label>Download Date</label>
+                    <input type="text" id="in-download-date" class="date-picker" value="14/11/2025" placeholder="Select Date">
+                </div>
+            </div>
+
+            <button type="button" class="btn-print" id="btn-print-aadhaar">Print Aadhaar</button>
+        </form>
+    </aside>
+
+    <main class="preview-area">
+        <div class="workspace" id="workspace" style="transform-origin: top center; transform: scale(0.85); box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+        <!-- Blank Background -->
+        <div class="bg-layer"></div>
+        
+        <!-- Reference Overlay for Alignment (50% opacity) -->
+        <div class="ref-layer"></div>
+
+        <!-- Fixed Text Elements -->
+
+        <!-- Enrollment Section -->
+        <div class="inrol-section">
+            <div class="text-element enrolment-no" id="out-enrolment-no"></div>
+            <p class="inroltext" id="out-inroltext">
+                
+        </div>
+        <div class="signature-section">
+            <div class="signature">Signature Not Verified</div>
+            <div class="signature-text">Digitally signed by DS Unique
+                                        Identification Authority of India<br>
+                                        05<br>
+                                        Date: <span id="out-signature-date"></span><br>
+                                        IST
+            </div>
+        </div>
+        <div class="qr-code ">
+            <img class="qr-code-image" id="out-qrcode1" src="" alt="QR Code">
+            <img class="qr-code-image-2" id="out-qrcode2" src="" alt="Qr-Code">
+        </div>
+         
+        <div class="text-element aadhar-no-top" id="out-aadhaar-1"></div>
+
+        <!-- Left Panel (Photo & Details) -->
+        <div class="left-panel">
+            <p class="inrol-date" id="out-inrol-date"></p>
+            <img class="fixed-image" id="out-photo" src="" data-base64-src="photo_base64.txt" alt="Aadhaar Image">
+            
+            <!-- Name & Details Section -->
+            <div class="name-section">
+                <!-- Hindi Name -->
+                <div class="text-element hindi-name" id="out-name-hi"></div>
+                <!-- English Name -->
+                <div class="text-element english-name" id="out-name-en"></div>
+                <div class="text-element dob-text">जन्म तिथि/ DOB: <span id="out-dob"></span></div>
+                <div class="text-element gender-text"><span id="out-gender-hi"></span>/ <span id="out-gender-en"></span></div>
+            </div>
+            
+            <div class="text-element aadhar-no-middle" id="out-aadhaar-2"></div>
+        </div>
+
+        <!-- Right Panel (Address Section) -->
+        <div class="address-section ">
+            <p class="download-date" id="out-download-date"></p>
+            <div class="text-element address-hi-label">पता:</div>
+            <div class="text-element address-hi-text" id="out-address-hi"></div>
+
+            <div class="text-element address-en-label">Address:</div>
+            <div class="text-element address-en-text" id="out-address-en"></div>
+            
+            <!-- Second instance of Aadhaar Number  -->
+           <div class="text-element aadhar-no-bottom" id="out-aadhaar-3"></div>
+        </div>
+    </main>
+</div>
+
+
+<!-- History Modal -->
+<div id="history-modal" class="popup-overlay" style="display: none;">
+    <div class="history-popup-content">
+        <div class="history-modal-header">
+            <h3>📜 Aadhaar History</h3>
+            <button id="close-history-btn" class="close-modal-btn">&times;</button>
+        </div>
+        <div id="history-list">
+            <!-- History items will be injected here -->
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
